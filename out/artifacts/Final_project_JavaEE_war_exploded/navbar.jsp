@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container p-0">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary border border-info border-warning border-2 rounded" style="background-color: #b20b38">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border border-info border-warning border-2 rounded" style="background-color: <%=mainRedColor%>">
             <div class="container-fluid">
                 <a class="navbar-brand text-warning fw-bold" style="font-size: 30px" href="/"><%=siteName%></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

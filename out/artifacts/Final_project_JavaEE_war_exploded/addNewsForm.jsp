@@ -11,7 +11,7 @@
   <div class="col-12">
     <select class="form-control" name="news_category_id">
       <%
-        ArrayList<NewsCategory> categories = (ArrayList<NewsCategory>) request.getAttribute("newsCategory");
+        ArrayList<NewsCategory> categories = (ArrayList<NewsCategory>) request.getAttribute("newsCategories");
         if(categories!=null){
           for(NewsCategory newsCategory: categories){
       %>

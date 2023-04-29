@@ -19,13 +19,13 @@ public class AddNews extends HttpServlet {
         String title = request.getParameter("news_title");
         String content = request.getParameter("news_content");
         NewsCategory newsCategory = DBConnection.getCategory(category);
-        if(newsCategory!=null){
+        if(newsCategory!=null) {
             News news = new News();
-            news.setNewsCategory(newsCategory);
             news.setTitle(title);
             news.setContent(content);
+            news.setNewsCategory(newsCategory);
             DBConnection.addNews(news);
         }
-        response.sendRedirect("/");
+        response.sendRedirect("/home");
     }
 }

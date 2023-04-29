@@ -84,7 +84,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <button style="background-color: #b20b38" class="btn text-warning">SIGN UP</button>
+                            <button style="background-color: <%=mainRedColor%>" class="btn text-warning">SIGN UP</button>
                         </div>
                     </div>
                 </form>

@@ -6,7 +6,7 @@
 </head>
 <body>
     <%@include file="navbar.jsp"%>
-    <div class="container mt-3">
+    <div class="container mt-3 p-0">
         <div class="row mt-3">
             <div class="col-12">
                 <%
@@ -44,22 +44,28 @@
             <div class="col-12">
                 <%
                     List<News> newsArrayList = (List<News>) request.getAttribute("news");
-                    if(newsArrayList!=null){
+                    if(newsArrayList.size()!=0){
                         for(News n: newsArrayList){
                 %>
-                        <div class="card mb-3 border border-info" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="images/<%=n.getNewsCategory().getId()%>.jpg" class="img-fluid rounded-start h-100" alt="typeOfNews">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <p class="card-text"><%=n.getId()%></p>
-                                        <h5 class="card-title"><%=n.getTitle()%></h5>
-                                        <p class="card-text"><%=n.getContent()%></p>
-                                        <p class="card-text"><small class="text-body-secondary"><%=n.getPost_date()%></small></p>
+                        <div class="row m-0">
+                            <div class="col-9 p-0">
+                                <div class="card mb-3 border border-3 border-warning text-warning" style="background-color: <%=mainRedColor%>">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="images/<%=n.getNewsCategory().getId()%>.jpg" class="img-fluid rounded-start w-100" alt="typeOfNews" style="max-height: 200px;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%=n.getTitle()%></h5>
+                                                <p class="card-text"><%=n.getContent()%></p>
+                                                <p class="card-text"><small class="text-body-secondary"><%=n.getPost_date()%></small></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-3 mb-3 border border-1 border-warning">
+                                <h1>This is block for comments and edit panel</h1>
                             </div>
                         </div>
                 <%

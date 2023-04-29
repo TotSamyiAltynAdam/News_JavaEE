@@ -1,9 +1,11 @@
 package db;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class DBConnection {
     private static Connection connection;
@@ -89,7 +91,7 @@ public class DBConnection {
         NewsCategory newsCategory = null;
         try{
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT name " +
+                    "SELECT * " +
                             "FROM news_categories " +
                             "WHERE id = ?"
             );
@@ -106,11 +108,33 @@ public class DBConnection {
         }
         return newsCategory;
     }
+    public static ArrayList<NewsCategory> getCategories(){
+        ArrayList<NewsCategory> newsCategoryArrayList = new ArrayList<>();
+        try{
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM news_categories "
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                NewsCategory newsCategory = new NewsCategory();
+                newsCategory.setId(resultSet.getInt("id"));
+                newsCategory.setName(resultSet.getString("name"));
+
+                newsCategoryArrayList.add(newsCategory);
+            }
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return newsCategoryArrayList;
+    }
+
     public static void addNews(News news){
         try {
             PreparedStatement statement = connection.prepareStatement(
-              "INSERT INTO news (post_date,category_id,title,content) " +
-                      "VALUES (NOW(),?,?,?)"
+              "INSERT INTO news (category_id, post_date, title, content) " +
+                      "VALUES (?, NOW(), ?, ?)"
             );
             statement.setInt(1,news.getNewsCategory().getId());
             statement.setString(2,news.getTitle());
@@ -120,5 +144,35 @@ public class DBConnection {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static ArrayList<News> getNews(){
+        ArrayList<News> news = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+              "SELECT n.id, n.post_date, n.category_id, n.title, n.content, nc.name " +
+                      "FROM news n " +
+                      "INNER JOIN news_categories nc ON n.category_id = nc.id " +
+                      "ORDER BY n.post_date DESC"
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                NewsCategory newsCategory = new NewsCategory();
+                newsCategory.setId(resultSet.getInt("category_id"));
+                newsCategory.setName(resultSet.getString("name"));
+
+                News n = new News();
+                n.setId(resultSet.getLong("id"));
+                n.setPost_date(resultSet.getTimestamp("post_date"));
+                n.setTitle(resultSet.getString("title"));
+                n.setNewsCategory(newsCategory);
+                n.setContent(resultSet.getString("content"));
+
+                news.add(n);
+            }
+            statement.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return news;
     }
 }

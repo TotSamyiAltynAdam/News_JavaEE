@@ -42,7 +42,7 @@
 
                     <div class="row mt-3">
                         <div class="col-12">
-                            <button class="btn text-warning" style="background-color: #b20b38">SIGN IN</button>
+                            <button class="btn text-warning" style="background-color: <%=mainRedColor%>">SIGN IN</button>
                         </div>
                     </div>
 
