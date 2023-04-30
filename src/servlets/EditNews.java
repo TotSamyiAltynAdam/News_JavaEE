@@ -12,24 +12,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/add-news")
-public class AddNews extends HttpServlet {
+@WebServlet(value = "/edit-news")
+public class EditNews extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        User currentUser = (User)request.getSession().getAttribute("currentUser");
+
         if(currentUser!=null && currentUser.getRole_id().equals("1")) {
-            int category = Integer.parseInt(request.getParameter("news_category_id"));
+            Long news_id = Long.parseLong(request.getParameter("news_id"));
+            int category_id = Integer.parseInt(request.getParameter("news_category_id"));
             String title = request.getParameter("news_title");
             String content = request.getParameter("news_content");
-            NewsCategory newsCategory = DBConnection.getCategory(category);
-            if (newsCategory != null) {
-                News news = new News();
+
+            News news = DBConnection.getOneNews(news_id);
+            NewsCategory newsCategory = DBConnection.getCategory(category_id);
+
+            if (news != null && newsCategory != null) {
                 news.setTitle(title);
                 news.setContent(content);
                 news.setNewsCategory(newsCategory);
-                DBConnection.addNews(news);
+                DBConnection.updateNews(news);
+                response.sendRedirect("/details?news_id=" + news_id);
+            } else {
+                response.sendRedirect("/");
             }
+        }else {
+            response.sendRedirect("/");
         }
-        response.sendRedirect("/home");
     }
 }

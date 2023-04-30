@@ -1,5 +1,6 @@
 <%@ page import="db.News" %>
 <%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Main Page</title>
@@ -64,8 +65,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3 mb-3 border border-1 border-warning">
-                                <h1>This is block for comments and edit panel</h1>
+                            <div class="col-3">
+                                <a class="btn btn-sm bg-warning" style="color: <%=mainRedColor%>"
+                                   href="/details?news_id=<%=n.getId()%>">Additional Panel</a>
                             </div>
                         </div>
                 <%

@@ -19,7 +19,10 @@ public class HomeServlet extends HttpServlet {
         List<NewsCategory> newsCategoryList = DBConnection.getCategories();
         request.setAttribute("newsCategories",newsCategoryList);
 
-        List<News> newsList = DBConnection.getNews();
+        String key = request.getParameter("key");
+        List<News> newsList;
+        if(key!=null) newsList = DBConnection.searchNews("%"+key+"%");
+        else newsList = DBConnection.getNews();
         request.setAttribute("news",newsList);
 
         request.getRequestDispatcher("/main.jsp").forward(request,response);

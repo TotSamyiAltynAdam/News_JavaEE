@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(value = "/profileInfEdit")
@@ -24,6 +25,11 @@ public class ProfileInfEdit extends HttpServlet {
             user.setPassword(password);
 
             DBConnection.updateUser(user);
+
+            request.getSession().removeAttribute("currentUser");
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUser",user);
+
             response.sendRedirect("/profile");
         }else{
             response.sendRedirect("/");

@@ -16,8 +16,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex; justify-content: space-between;">
                     <div>
-                        <form class="d-flex mt-3" role="search" action="/home" method="get">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <form class="d-flex mt-3" role="search" action="/" method="get">
+                            <%
+                                String key = request.getParameter("key");
+                                if(key==null) key = "";
+                            %>
+                            <input class="form-control me-2" type="text" name="key" placeholder="Search" aria-label="Search" value="<%=key%>">
                             <button class="btn btn-outline-warning" type="submit">Search</button>
                         </form>
                     </div>
